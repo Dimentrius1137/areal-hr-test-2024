@@ -2,12 +2,12 @@ import { Controller, Get, Post, Patch, Delete, Req, Body } from '@nestjs/common'
 import { DbService } from 'src/db/db.service';
 import { DepartmentDto } from './department.dto';
 import { Request } from 'express';
-@Controller('department')
+@Controller('api/organization/:org_id/department')
 export class DepartmentController {
     constructor(private readonly dbService: DbService) {}
     @Get()
-    async getDepartments(){
-        const departments = this.dbService.query(`SELECT * FROM department`);
+    async getDepartments(@Req() req){
+        const departments = this.dbService.query(`SELECT * FROM department WHERE organization_id = ${req.params.org_id}` );
         return departments;
     }
 

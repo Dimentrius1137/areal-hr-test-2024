@@ -2,7 +2,7 @@ import { Controller, Get, Post, Patch, Delete, Req, Body } from '@nestjs/common'
 import { DbService } from 'src/db/db.service';
 import { OrganizationDto } from './organization.dto';
 import { Request } from 'express';
-@Controller('organization')
+@Controller('api/organization')
 export class OrganizationController {
     constructor(private readonly dbService: DbService) {}
     @Get()
