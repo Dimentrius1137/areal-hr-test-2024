@@ -5,7 +5,6 @@ module.exports = {
 
   env: {
     node: true,
-    jest: true,
   },
 
   parserOptions: {
@@ -25,9 +24,11 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.js'],
 
   rules: {
+    'no-var': 'warn',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn', 
+    // '@typescript-eslint/explicit-module-boundary-types': 'warn',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
   },
 };
