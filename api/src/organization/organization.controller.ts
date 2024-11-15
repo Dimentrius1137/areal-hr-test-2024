@@ -1,49 +1,33 @@
-import { Controller, Get, Post, Patch, Delete, Req, Body } from '@nestjs/common';
-import { DbService } from 'src/db/db.service';
+import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
+import { OrganizationService } from './organization.service';
 import { OrganizationDto } from './organization.dto';
-import { Request } from 'express';
 
-@Controller('api/organization')
+@Controller('/organization')
 
 export class OrganizationController {
-    constructor(private readonly dbService: DbService) {}
+    constructor(private organization: OrganizationService) {}
     @Get()
     async getOrgs() {
-        const organizations = this.dbService.query(
-            `SELECT * FROM organization`,
-        );
-        return organizations;
+        return this.organization.getAll();
     }
 
     @Get(':id')
-    async getOrgById(@Req() req: Request) {
-        const organization = this.dbService.query(
-            `SELECT * FROM organization WHERE id = ${req.params.id}`,
-        );
-        return organization;
+    async getOrgById(@Param('id') id: number) {
+        return this.organization.getOne(id);
     }
 
     @Post()
     async createOrg(@Body() organizationDto: OrganizationDto) {
-        const newOrganization = this.dbService.query(
-            `INSERT INTO organization (title, comment) VALUES ('${organizationDto.title}', '${organizationDto.comment}')`,
-        );
-        return newOrganization;
+        return this.organization.create(organizationDto);
     }
 
     @Patch(':id')
-    async updateOrg(@Req() req: Request,@Body() organizationDto: OrganizationDto) {
-        const updatedOrganization = this.dbService.query(
-            `UPDATE organization SET title = '${organizationDto.title}', comment = '${organizationDto.comment}' WHERE id = ${req.params.id}`,
-        );
-        return updatedOrganization;
+    async updateOrg(@Param('id') id: number, @Body() organizationDto: OrganizationDto) {
+        return this.organization.update(id, organizationDto)
     }
     
     @Delete(':id')
-    async deleteOrg(@Req() req: Request) {
-        const deletingOrganization = this.dbService.query(
-            `DELETE FROM organization WHERE id = ${req.params.id}`,
-        );
-        return deletingOrganization;
+    async deleteOrg(@Param('id') id: number) {
+        return this.organization.delete(id);
     }
 }

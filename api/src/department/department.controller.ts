@@ -1,48 +1,34 @@
-import { Controller, Get, Post, Patch, Delete, Req, Body } from '@nestjs/common';
-import { DbService } from 'src/db/db.service';
+import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
+import { DepartmentService } from './department.service'
 import { DepartmentDto } from './department.dto';
-import { Request } from 'express';
 
-@Controller('api/organization/:org_id/department')
+@Controller('/organization/:org_id/department')
 export class DepartmentController {
-    constructor(private readonly dbService: DbService) {}
+    constructor(private department: DepartmentService) {}
     @Get()
-    async getDepartments(@Req() req) {
-        const departments = this.dbService.query(
-            `SELECT * FROM department WHERE organization_id = ${req.params.org_id}`,
-        );
-        return departments;
+    getDepartments(@Param('org_id') org_id: number) {
+        return this.department.getAll(org_id);
     }
 
     @Get(':id')
-    async getDepartmentById(@Req() req: Request) {
-        const department = this.dbService.query(
-            `SELECT * FROM department WHERE id = ${req.params.id}`,
-        );
-        return department;
+    async getDepartmentById(@Param() params) {
+        return this.department.getOne(params.org_id, params.id);
     }
 
     @Post()
     async createDepartment(@Body() departmentDto: DepartmentDto) {
-        const newDepartment = this.dbService.query(
-            `INSERT INTO department (title, comment, parent, organization_id) VALUES ('${departmentDto.title}', '${departmentDto.comment}', '${departmentDto.parent}', '${departmentDto.organization_id}')`,
-        );
-        return newDepartment;
+        return this.department.create(departmentDto);
     }
 
     @Patch(':id')
-    async updateDepartment(@Req() req: Request, @Body() departmentDto: DepartmentDto) {
-        const updatedDepartment = this.dbService.query(
-            `UPDATE organization SET title = '${departmentDto.title}', comment = '${departmentDto.comment}', parent = ${departmentDto.organization_id}, organization_id = '${departmentDto.organization_id}' WHERE id = ${req.params.id}`,
-        );
-        return updatedDepartment;
+    async updateDepartment(@Param('id') id: number, @Body() departmentDto: DepartmentDto) {
+        return this.department.update(id, departmentDto)
     }
-    
+
     @Delete(':id')
-    async deleteOrg(@Req() req: Request) {
-        const deletingDepartment = this.dbService.query(
-            `DELETE FROM department WHERE id = ${req.params.id}`,
-        );
-        return deletingDepartment;
+    async deleteOrg(@Param('id') id: number) {
+        return this.department.delete(id);
     }
 }
+
+

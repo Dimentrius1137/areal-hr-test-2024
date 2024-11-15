@@ -1,11 +1,16 @@
-import { Module } from '@nestjs/common';
+import  { Module } from '@nestjs/common';
+import 'dotenv/config';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { OrganizationController } from './organization/organization.controller';
 import { DbModule } from './db/db.module';
+import { OrganizationController } from './organization/organization.controller';
 import { DepartmentController } from './department/department.controller';
 import { PositionController } from './position/position.controller';
-import 'dotenv/config';
+
+import { OrganizationService } from './organization/organization.service';
+import { DepartmentService } from './department/department.service';
+import { PositionService } from './position/position.service';
 @Module({
     imports: [
         DbModule.register({
@@ -22,6 +27,11 @@ import 'dotenv/config';
         DepartmentController,
         PositionController,
     ],
-    providers: [AppService],
+    providers: [
+        AppService,
+        OrganizationService, 
+        DepartmentService, 
+        PositionService
+    ],
 })
 export class AppModule {}
