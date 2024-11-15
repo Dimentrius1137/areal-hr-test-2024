@@ -5,13 +5,13 @@ import { Pool } from 'pg';
 export class DbService {
     constructor(@Inject('PG_CONNECTION') private readonly pool: Pool) {}
 
-    async query(query: string, params?: any[]) {
-      const client = await this.pool.connect();
-      try {
-        const res = await client.query(query, params);
-        return res.rows;
-      } finally {
-        client.release();
-      }
+    async query(query: string, params?: (string | number | boolean | null)[]) {
+        const client = await this.pool.connect();
+        try {
+            const res = await client.query(query, params);
+            return res.rows;
+        } finally {
+            client.release();
+        }
     }
 }

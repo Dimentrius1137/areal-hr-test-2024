@@ -2,6 +2,7 @@ import { Controller, Get, Post, Patch, Delete, Req, Body } from '@nestjs/common'
 import { DbService } from 'src/db/db.service';
 import { PositionDto } from './position.dto';
 import { Request } from 'express';
+
 @Controller('api/position')
 export class PositionController {
     constructor(private readonly dbService: DbService) {}
@@ -28,9 +29,10 @@ export class PositionController {
         const updatedPosition = this.dbService.query(`UPDATE position SET title = '${positionDto.title}' WHERE id = ${req.params.id}`); 
         return updatedPosition;
     }
+    
     @Delete(':id')
     async deletePosition(@Req() req: Request){
-        const deletingPosition = this.dbService.query(`DELETE FROM position WHERE id = ${req.params.id}`); 
+        const deletingPosition = this.dbService.query(`DELETE FROM position WHERE id = ${req.params.id}); WHERE id = ${req.params.id}`); 
         return deletingPosition;
     }
 }

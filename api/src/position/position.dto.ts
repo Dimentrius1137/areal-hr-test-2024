@@ -1,3 +1,3 @@
 export class PositionDto {
-    title: string
+    title: string;
 }
