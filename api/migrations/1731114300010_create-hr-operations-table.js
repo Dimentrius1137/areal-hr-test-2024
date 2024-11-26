@@ -12,7 +12,7 @@ exports.up = (pgm) => {
         type: 'boolean', 
     },
     salary: {
-        type: 'boolean', 
+        type: 'integer', 
     },
     employee_id: {
         type: 'integer', 
