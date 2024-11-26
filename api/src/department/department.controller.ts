@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
 import { DepartmentService } from './department.service'
 import { DepartmentDto } from './department.dto';
-
+import { UpdateDepartmentDto } from './updateDepartment.dto'
 @Controller('/organization/:org_id/department')
 export class DepartmentController {
     constructor(private department: DepartmentService) {}
@@ -21,7 +21,7 @@ export class DepartmentController {
     }
 
     @Patch(':id')
-    async updateDepartment(@Param('id') id: number, @Body() departmentDto: DepartmentDto) {
+    async updateDepartment(@Param('id') id: number, @Body() departmentDto: UpdateDepartmentDto) {
         return this.department.update(id, departmentDto)
     }
 

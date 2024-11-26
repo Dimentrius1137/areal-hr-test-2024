@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
 import { OrganizationService } from './organization.service';
 import { OrganizationDto } from './organization.dto';
+import { UpdateOrganizationDto } from './updateOrganization.dto';
 
 @Controller('/organization')
 
@@ -22,7 +23,7 @@ export class OrganizationController {
     }
 
     @Patch(':id')
-    async updateOrg(@Param('id') id: number, @Body() organizationDto: OrganizationDto) {
+    async updateOrg(@Param('id') id: number, @Body() organizationDto: UpdateOrganizationDto) {
         return this.organization.update(id, organizationDto)
     }
     
