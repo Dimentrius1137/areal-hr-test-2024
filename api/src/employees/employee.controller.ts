@@ -3,6 +3,7 @@ import { EmployeeService } from './employee.service'
 import { EmployeeDto } from './employee.dto';
 import { UpdateEmployeeDto } from './updateEmployee.dto'
 
+//Todo очень странные prefix, они не должны быть такими
 @Controller('/organization/:org_id/department/:dep_id/employee')
 export class EmployeeController {
     constructor(private employee: EmployeeService) {}

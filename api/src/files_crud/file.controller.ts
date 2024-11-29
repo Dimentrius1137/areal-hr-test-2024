@@ -4,6 +4,7 @@ import { DbService } from 'src/db/db.service';
 import { FileDataDto } from './fileData.dto';
 import { UpdatedFile } from './updateFile.dto';
 
+//Todo файлы должны быть неотрывны от пользователя
 @Controller('/organization/:org_id/department/:dep_id/employee/:emp_id/files')
 export class FilesController {
     constructor(
